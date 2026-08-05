@@ -2,6 +2,7 @@
 using backend.Models;
 using backend.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using backend.Services;
 
 namespace backend.Controllers
 {
@@ -11,9 +12,12 @@ namespace backend.Controllers
     {
         private readonly UserRepository _userRepository;
 
-        public AuthController(UserRepository userRepository)
+        private readonly JwtService _jwtService;
+
+        public AuthController(UserRepository userRepository, JwtService jwtService)
         {
             _userRepository = userRepository;
+            _jwtService = jwtService;
         }
 
         [HttpPost("register")]
@@ -50,9 +54,11 @@ namespace backend.Controllers
                 return Unauthorized("Invalid email or password.");
             }
 
+            string token = _jwtService.GenerateToken(user);
+
             return Ok(new
             {
-                Message = "Login successful."
+                Token = token
             });
         }
     }

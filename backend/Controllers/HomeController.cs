@@ -1,5 +1,6 @@
 ﻿using backend.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace backend.Controllers
 {
@@ -14,6 +15,7 @@ namespace backend.Controllers
             _userRepository = userRepository;
         }
 
+        [Authorize]
         [HttpGet("db-test")]
         public IActionResult TestDatabase()
         {
