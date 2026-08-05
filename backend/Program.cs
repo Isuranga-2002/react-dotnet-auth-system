@@ -16,10 +16,10 @@ namespace backend
 
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy("ReactFrontend", policy =>
+                options.AddPolicy("AllowAll", policy =>
                 {
                     policy
-                        .WithOrigins("http://localhost:5173")
+                        .WithOrigins()
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });
@@ -64,7 +64,7 @@ namespace backend
 
             app.UseHttpsRedirection();
 
-            app.UseCors("ReactFrontend");
+            app.UseCors("AllowAll");
 
             app.UseAuthentication();
 
