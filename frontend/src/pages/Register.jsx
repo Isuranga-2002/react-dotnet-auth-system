@@ -26,10 +26,30 @@ function Register() {
 
         try {
 
-            // We'll call the API here
+            await register({
+                fullName,
+                email,
+                password
+            });
 
-        } finally {
+            navigate("/", {
+                state: {
+                    message: "Registration successful. Please log in."
+                }
+            });
+
+        } catch (err) {
+
+            setError(
+                err.response?.data ||
+                "Registration failed."
+            );
+
+        }
+        finally {
+
             setLoading(false);
+
         }
     };
 
