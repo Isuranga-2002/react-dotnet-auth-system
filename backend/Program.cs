@@ -14,6 +14,17 @@ namespace backend
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("ReactFrontend", policy =>
+                {
+                    policy
+                        .WithOrigins("http://localhost:5173")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
+
             // Add services to the container.
 
             builder.Services.AddControllers();
@@ -52,6 +63,8 @@ namespace backend
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors("ReactFrontend");
 
             app.UseAuthentication();
 
