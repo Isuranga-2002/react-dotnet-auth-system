@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using backend.Repositories;
+using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers
 {
@@ -6,10 +7,19 @@ namespace backend.Controllers
     [Route("api/[controller]")]
     public class HomeController : ControllerBase
     {
-        [HttpGet]
-        public IActionResult Get()
+        private readonly UserRepository _userRepository;
+
+        public HomeController(UserRepository userRepository)
         {
-            return Ok("Backend is running successfully!");
+            _userRepository = userRepository;
+        }
+
+        [HttpGet("db-test")]
+        public IActionResult TestDatabase()
+        {
+            string result = _userRepository.TestDatabaseConnection();
+
+            return Ok(result);
         }
     }
 }

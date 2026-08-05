@@ -1,4 +1,7 @@
 
+using backend.Database;
+using backend.Repositories;
+
 namespace backend
 {
     public class Program
@@ -11,6 +14,11 @@ namespace backend
 
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+
+            builder.Services.AddSingleton<DatabaseHelper>();
+
+            builder.Services.AddSingleton<UserRepository>();
+
             builder.Services.AddOpenApi();
 
             var app = builder.Build();
